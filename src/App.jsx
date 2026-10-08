@@ -48,6 +48,12 @@ const team = [
     image: 'photo-1534528741775-53994a69daeb',
     bio: 'Mendengarkan cerita dan masukan pelanggan agar setiap kunjungan terasa hangat dan personal.',
   },
+  {
+    name: 'Aulya Reski',
+    role: 'Team Segar.Hari',
+    image: '/aulya-reski-square.jpg',
+    bio: 'Turut menghadirkan minuman buah segar dengan perhatian dan semangat dalam setiap gelas.',
+  },
 ]
 
 function Header() {
@@ -159,7 +165,7 @@ function HomePage() {
             <div><span className="eyebrow">DARI DAPUR KECIL KAMI</span><h2>Segar favoritmu.</h2></div>
             <p>Setiap gelas diracik satu per satu dari buah segar. Pilih teman harimu.</p>
           </div>
-          <div className="row g-4">
+          <div className="row g-4 justify-content-center">
             {products.map((product) => (
               <div className="col-md-4" key={product.name}>
                 <article className="product-card">
@@ -232,7 +238,7 @@ function TeamPage() {
                 <article className="team-card">
                   <div className="team-photo">
                     <img
-                      src={`https://images.unsplash.com/${person.image}?auto=format&fit=crop&w=800&q=85`}
+                      src={person.image.startsWith('/') ? person.image : `https://images.unsplash.com/${person.image}?auto=format&fit=crop&w=800&q=85`}
                       alt={`Foto ${person.name}`}
                       loading="lazy"
                     />
