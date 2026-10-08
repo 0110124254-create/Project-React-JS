@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, NavLink, Outlet, Route, Routes } from 'react-router-dom'
 import './App.css'
 
 const products = [
@@ -73,11 +73,12 @@ function Header() {
           type="button"
           aria-label={menuOpen ? 'Tutup menu' : 'Buka menu'}
           aria-expanded={menuOpen}
+          aria-controls="primary-navigation"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <span className="navbar-toggler-icon" />
         </button>
-        <div className={`collapse navbar-collapse ${menuOpen ? 'show' : ''}`}>
+        <div id="primary-navigation" className={`collapse navbar-collapse ${menuOpen ? 'show' : ''}`}>
           <div className="navbar-nav ms-auto align-items-lg-center gap-lg-2">
             <NavLink className="nav-link" to="/" end onClick={closeMenu}>Beranda</NavLink>
             <NavLink className="nav-link" to="/team" onClick={closeMenu}>Team</NavLink>
@@ -165,7 +166,7 @@ function HomePage() {
             <div><span className="eyebrow">DARI DAPUR KECIL KAMI</span><h2>Segar favoritmu.</h2></div>
             <p>Setiap gelas diracik satu per satu dari buah segar. Pilih teman harimu.</p>
           </div>
-          <div className="row g-4 justify-content-center">
+          <div className="row g-4">
             {products.map((product) => (
               <div className="col-md-4" key={product.name}>
                 <article className="product-card">
@@ -232,9 +233,9 @@ function TeamPage() {
       />
       <section className="team-section section-space">
         <div className="container">
-          <div className="row g-4">
+          <div className="row g-4 justify-content-center">
             {team.map((person, index) => (
-              <div className="col-md-4" key={person.name}>
+              <div className="col-md-6 col-xl-3" key={person.name}>
                 <article className="team-card">
                   <div className="team-photo">
                     <img
@@ -349,19 +350,27 @@ function NotFoundPage() {
 function App() {
   return (
     <BrowserRouter>
-      <div className="app-shell">
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/team" element={<TeamPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/team" element={<TeamPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
+  )
+}
+
+function AppLayout() {
+  return (
+    <div className="app-shell">
+      <Header />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   )
 }
 
