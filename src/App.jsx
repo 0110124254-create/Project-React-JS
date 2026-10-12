@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { BrowserRouter, NavLink, Outlet, Route, Routes, useOutletContext } from 'react-router-dom'
 import booksData from './Utils/books.js'
-import './App.css'
+import '../App.css'
 
 const formatPrice = (price) => new Intl.NumberFormat('id-ID', {
   style: 'currency',
