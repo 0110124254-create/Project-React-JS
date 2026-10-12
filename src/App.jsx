@@ -127,10 +127,10 @@ function HomePage() {
       <section className="featured-section section-pad">
         <div className="container">
           <div className="section-heading">
-            <div><span className="eyebrow">DIKURASI UNTUKMU</span><h2>Teman baca pilihan.</h2></div>
-            <NavLink className="text-link" to="/buku">Lihat semua buku <span aria-hidden="true">↗</span></NavLink>
+            <div><span className="eyebrow">SEMBILAN CERITA PILIHAN</span><h2>Koleksi buku untukmu.</h2></div>
+            <NavLink className="text-link" to="/buku">Cari &amp; tambah koleksi <span aria-hidden="true">↗</span></NavLink>
           </div>
-          <BookGrid books={books.slice(0, 4)} />
+          <BookGrid books={books} />
         </div>
       </section>
 
