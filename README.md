@@ -1,16 +1,32 @@
-# React + Vite
+# Ruang Baca
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Ruang Baca is a React bookstore demo for discovering a curated collection of books, learning about the team, and trying the registration and login forms.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```sh
+npm install
+npm run dev
+```
 
-## React Compiler
+Open the local URL printed by Vite.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Available pages
 
-## Expanding the Oxlint configuration
+- `/` — Home page with selected books
+- `/buku` — Searchable book collection and demo add-book form
+- `/team` — Meet the Ruang Baca team
+- `/contact` — Contact form demo
+- `/register` — Registration form demo
+- `/login` — Login form demo
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+The forms are frontend demonstrations only. There is no backend authentication, and form data is not sent or persisted.
+
+## Validation
+
+```sh
+npm run build
+npm run lint
+```
+
+The GitHub repository URL remains `https://github.com/0110124254-create/Project-React-JS`.

@@ -1,53 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap');
 
 :root {
   font-family: 'DM Sans', sans-serif;
-  color: #30392e;
-  background: #fffdf8;
+  color: #292b25;
+  background: #fbfaf6;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  scroll-behavior: smooth;
-  --ink: #30392e;
-  --muted: #747a6f;
-  --green: #315e43;
-  --green-deep: #234733;
-  --orange: #f28a4b;
-  --cream: #fffdf8;
-  --pale: #f5f2e9;
-  --line: #e9e6dc;
+  --ink: #292b25;
+  --muted: #77786e;
+  --rust: #a94f36;
+  --paper: #fbfaf6;
+  --cream: #f2eee5;
+  --pale: #eee9de;
+  --line: #e5e0d5;
   --heading: 'Manrope', sans-serif;
+  --body: 'DM Sans', sans-serif;
+  --serif: 'DM Serif Display', Georgia, serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  min-width: 320px;
-  margin: 0;
-}
-
-button,
-input,
-select,
-textarea {
-  font: inherit;
-}
-
-a {
-  color: inherit;
-}
-
-::selection {
-  color: white;
-  background: var(--green);
-}
-
-:focus-visible {
-  outline: 3px solid rgba(242, 138, 75, 0.6);
-  outline-offset: 3px;
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { min-width: 320px; margin: 0; }
+button, input { font: inherit; }
+a { color: inherit; }
+::selection { color: white; background: var(--rust); }
+:focus-visible { outline: 3px solid rgba(169, 79, 54, .55); outline-offset: 3px; }
