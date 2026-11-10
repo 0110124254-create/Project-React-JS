@@ -19,8 +19,10 @@ import AdminBooks from "./pages/admin/books/index";
 import BookCreate from "./pages/admin/books/create";
 import AdminGenres from "./pages/admin/genres/index";
 import GenreCreate from "./pages/admin/genres/create";
+import GenreEdit from "./pages/admin/genres/edit";
 import AdminAuthors from "./pages/admin/authors/index";
 import AuthorCreate from "./pages/admin/authors/create";
+import AuthorEdit from "./pages/admin/authors/edit";
 import AdminTransactions from "./pages/admin/transactions/index";
 
 function NotFound() {
@@ -68,13 +70,15 @@ export default function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<Dashboard />} />
           
-          {/* Genre Routes (Read & Create) */}
+          {/* Genre Routes (Read, Create, Update, Delete) */}
           <Route path="genres" element={<AdminGenres />} />
           <Route path="genres/create" element={<GenreCreate />} />
+          <Route path="genres/edit/:id" element={<GenreEdit />} />
           
-          {/* Author Routes (Read & Create) */}
+          {/* Author Routes (Read, Create, Update, Delete) */}
           <Route path="authors" element={<AdminAuthors />} />
           <Route path="authors/create" element={<AuthorCreate />} />
+          <Route path="authors/edit/:id" element={<AuthorEdit />} />
           
           {/* Book Routes */}
           <Route path="books" element={<AdminBooks />} />

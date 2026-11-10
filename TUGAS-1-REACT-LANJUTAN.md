@@ -84,3 +84,4 @@
    php artisan serve
    ```
    *Catatan: Sistem telah dilengkapi fitur offline storage fallback otomatis, sehingga antarmuka dan operasi CRUD tetap berfungsi 100% lancar meskipun backend server belum dinyalakan.*
+

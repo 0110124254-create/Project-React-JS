@@ -122,7 +122,6 @@ export const getGenres = async () => {
   try {
     const response = await apiClient.get('/genres');
     if (response.data && response.data.data) {
-      // Simpan salinan ke storage lokal sebagai cache
       setStoredData('app_genres', response.data.data);
       return {
         data: response.data.data,
@@ -136,6 +135,27 @@ export const getGenres = async () => {
   const local = getStoredData('app_genres', INITIAL_GENRES);
   return {
     data: local,
+    source: 'local',
+  };
+};
+
+export const getGenreById = async (id) => {
+  try {
+    const response = await apiClient.get(`/genres/${id}`);
+    if (response.data && response.data.data) {
+      return {
+        data: response.data.data,
+        source: 'api',
+      };
+    }
+  } catch (err) {
+    console.warn('Backend API gagal, memuat genre dari lokal:', err.message);
+  }
+
+  const local = getStoredData('app_genres', INITIAL_GENRES);
+  const found = local.find((g) => String(g.id) === String(id));
+  return {
+    data: found || null,
     source: 'local',
   };
 };
@@ -154,7 +174,6 @@ export const createGenre = async (genreData) => {
     console.warn('Backend API gagal, menyimpan data secara lokal:', err.message);
   }
 
-  // Jika API gagal atau offline, simpan ke local storage
   const current = getStoredData('app_genres', INITIAL_GENRES);
   if (!createdItem) {
     createdItem = {
@@ -165,7 +184,7 @@ export const createGenre = async (genreData) => {
     };
   }
 
-  const updated = [createdItem, ...current.filter((g) => g.id !== createdItem.id)];
+  const updated = [createdItem, ...current.filter((g) => String(g.id) !== String(createdItem.id))];
   setStoredData('app_genres', updated);
 
   return {
@@ -174,15 +193,54 @@ export const createGenre = async (genreData) => {
   };
 };
 
-export const deleteGenre = async (id) => {
+export const updateGenre = async (id, genreData) => {
+  let updatedItem = null;
+  let source = 'local';
+
   try {
-    await apiClient.delete(`/genres/${id}`);
+    const response = await apiClient.put(`/genres/${id}`, genreData);
+    if (response.data && response.data.data) {
+      updatedItem = response.data.data;
+      source = 'api';
+    }
+  } catch (err) {
+    console.warn('Backend API gagal, mengupdate data secara lokal:', err.message);
+  }
+
+  const current = getStoredData('app_genres', INITIAL_GENRES);
+  const existing = current.find((g) => String(g.id) === String(id));
+  if (!updatedItem) {
+    updatedItem = {
+      ...(existing || {}),
+      id: existing?.id || Number(id) || id,
+      name: genreData.name,
+      description: genreData.description || null,
+      updated_at: new Date().toISOString(),
+    };
+  }
+
+  const updatedList = current.map((g) => (String(g.id) === String(id) ? updatedItem : g));
+  setStoredData('app_genres', updatedList);
+
+  return {
+    data: updatedItem,
+    source,
+  };
+};
+
+export const deleteGenre = async (id) => {
+  let success = false;
+  try {
+    const response = await apiClient.delete(`/genres/${id}`);
+    if (response.status === 200 || response.status === 204) {
+      success = true;
+    }
   } catch (err) {
     console.warn('Delete via API gagal, menghapus dari lokal:', err.message);
   }
 
   const current = getStoredData('app_genres', INITIAL_GENRES);
-  const updated = current.filter((g) => g.id !== id);
+  const updated = current.filter((g) => String(g.id) !== String(id));
   setStoredData('app_genres', updated);
   return true;
 };
@@ -205,6 +263,27 @@ export const getAuthors = async () => {
   const local = getStoredData('app_authors', INITIAL_AUTHORS);
   return {
     data: local,
+    source: 'local',
+  };
+};
+
+export const getAuthorById = async (id) => {
+  try {
+    const response = await apiClient.get(`/authors/${id}`);
+    if (response.data && response.data.data) {
+      return {
+        data: response.data.data,
+        source: 'api',
+      };
+    }
+  } catch (err) {
+    console.warn('Backend API gagal, memuat author dari lokal:', err.message);
+  }
+
+  const local = getStoredData('app_authors', INITIAL_AUTHORS);
+  const found = local.find((a) => String(a.id) === String(id));
+  return {
+    data: found || null,
     source: 'local',
   };
 };
@@ -234,7 +313,7 @@ export const createAuthor = async (authorData) => {
     };
   }
 
-  const updated = [createdItem, ...current.filter((a) => a.id !== createdItem.id)];
+  const updated = [createdItem, ...current.filter((a) => String(a.id) !== String(createdItem.id))];
   setStoredData('app_authors', updated);
 
   return {
@@ -243,15 +322,55 @@ export const createAuthor = async (authorData) => {
   };
 };
 
-export const deleteAuthor = async (id) => {
+export const updateAuthor = async (id, authorData) => {
+  let updatedItem = null;
+  let source = 'local';
+
   try {
-    await apiClient.delete(`/authors/${id}`);
+    const response = await apiClient.put(`/authors/${id}`, authorData);
+    if (response.data && response.data.data) {
+      updatedItem = response.data.data;
+      source = 'api';
+    }
+  } catch (err) {
+    console.warn('Backend API gagal, mengupdate author secara lokal:', err.message);
+  }
+
+  const current = getStoredData('app_authors', INITIAL_AUTHORS);
+  const existing = current.find((a) => String(a.id) === String(id));
+  if (!updatedItem) {
+    updatedItem = {
+      ...(existing || {}),
+      id: existing?.id || Number(id) || id,
+      name: authorData.name,
+      nationality: authorData.nationality || 'Indonesia',
+      description: authorData.description || null,
+      updated_at: new Date().toISOString(),
+    };
+  }
+
+  const updatedList = current.map((a) => (String(a.id) === String(id) ? updatedItem : a));
+  setStoredData('app_authors', updatedList);
+
+  return {
+    data: updatedItem,
+    source,
+  };
+};
+
+export const deleteAuthor = async (id) => {
+  let success = false;
+  try {
+    const response = await apiClient.delete(`/authors/${id}`);
+    if (response.status === 200 || response.status === 204) {
+      success = true;
+    }
   } catch (err) {
     console.warn('Delete author via API gagal, menghapus dari lokal:', err.message);
   }
 
   const current = getStoredData('app_authors', INITIAL_AUTHORS);
-  const updated = current.filter((a) => a.id !== id);
+  const updated = current.filter((a) => String(a.id) !== String(id));
   setStoredData('app_authors', updated);
   return true;
 };

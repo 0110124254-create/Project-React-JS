@@ -172,23 +172,23 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm space-y-4">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-            <span>📌</span> Tugas 1 React JS Lanjutan
+            <span>📌</span> Tugas 2 React JS Lanjutan
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-            Implementasi operasi <strong>CRUD (Create &amp; Read)</strong> di React JS menggunakan teknik <strong>Asynchronous</strong> dan pustaka <strong>Axios</strong> untuk entitas:
+            Implementasi penuh operasi <strong>CRUD (Create, Read, Update, Delete)</strong> di React JS menggunakan teknik <strong>Asynchronous</strong> dan pustaka <strong>Axios</strong> untuk entitas:
           </p>
           <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
             <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span><strong>Genre:</strong> Read data via <code>GET /api/genres</code> dan Create data via <code>POST /api/genres</code>.</span>
+              <span><strong>Genre (CRUD):</strong> Read (<code>GET</code>), Create (<code>POST</code>), Update (<code>PUT</code>), &amp; Delete (<code>DELETE</code>) via <code>/api/genres</code>.</span>
             </li>
             <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span><strong>Author:</strong> Read data via <code>GET /api/authors</code> dan Create data via <code>POST /api/authors</code>.</span>
+              <span><strong>Author (CRUD):</strong> Read (<code>GET</code>), Create (<code>POST</code>), Update (<code>PUT</code>), &amp; Delete (<code>DELETE</code>) via <code>/api/authors</code>.</span>
             </li>
             <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-indigo-500" />
-              <span><strong>Desain Kreatif:</strong> Desain antarmuka modern dengan Tailwind CSS &amp; Flowbite UI.</span>
+              <span><strong>Desain Interaktif:</strong> Live Preview real-time, validasi form, modal dialog konfirmasi, dan status bar API.</span>
             </li>
           </ul>
         </div>

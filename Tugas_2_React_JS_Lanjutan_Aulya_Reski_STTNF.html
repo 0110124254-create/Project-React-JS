@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laporan Tugas 2 React JS Lanjutan - Aulya Reski</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 15mm 18mm;
+    }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      color: #1f2937;
+      background: #ffffff;
+      line-height: 1.5;
+      font-size: 10pt;
+      margin: 0;
+      padding: 0;
+    }
+    .header-box {
+      border-bottom: 2.5px solid #4f46e5;
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+    .header-title h1 {
+      margin: 0 0 4px 0;
+      color: #111827;
+      font-size: 18pt;
+      font-weight: 800;
+    }
+    .header-title p {
+      margin: 0;
+      color: #4b5563;
+      font-size: 10pt;
+    }
+    .meta-card {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      page-break-inside: avoid;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 5px 12px;
+      font-size: 9.5pt;
+    }
+    .meta-label {
+      font-weight: 600;
+      color: #4b5563;
+    }
+    .meta-val {
+      color: #111827;
+    }
+    .link-badge {
+      display: inline-block;
+      background: #4f46e5;
+      color: #ffffff !important;
+      text-decoration: none;
+      padding: 3px 10px;
+      border-radius: 5px;
+      font-weight: 600;
+      font-size: 9pt;
+    }
+    h2 {
+      color: #1e1b4b;
+      font-size: 12.5pt;
+      border-bottom: 1.5px solid #e5e7eb;
+      padding-bottom: 4px;
+      margin-top: 18px;
+      margin-bottom: 8px;
+      page-break-after: avoid;
+    }
+    h3 {
+      color: #3730a3;
+      font-size: 11pt;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      page-break-after: avoid;
+    }
+    p, li {
+      color: #374151;
+      text-align: justify;
+    }
+    ul, ol {
+      margin-top: 3px;
+      margin-bottom: 10px;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 3px;
+    }
+    code {
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 8.5pt;
+      font-family: Consolas, Monaco, monospace;
+      border: 1px solid #e2e8f0;
+    }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 10px 14px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 8.5pt;
+      line-height: 1.4;
+      font-family: Consolas, Monaco, monospace;
+      margin: 8px 0;
+      page-break-inside: avoid;
+    }
+    .callout {
+      background: #eef2ff;
+      border-left: 4px solid #4f46e5;
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      margin: 10px 0 6px 0;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+    .callout-title {
+      font-weight: 700;
+      color: #312e81;
+      margin-bottom: 2px;
+    }
+    .table-container {
+      margin: 12px 0;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      overflow: hidden;
+      page-break-inside: avoid;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.5pt;
+    }
+    th {
+      background: #f9fafb;
+      color: #374151;
+      text-align: left;
+      padding: 8px 10px;
+      border-bottom: 1px solid #e5e7eb;
+      font-weight: 600;
+    }
+    td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header-box">
+    <div class="header-title">
+      <h1>LAPORAN TUGAS 2 — REACT JS LANJUTAN</h1>
+      <p>Operasi CRUD: Fitur Update dan Delete Data Genre dan Author pada Panel Admin</p>
+    </div>
+  </div>
+
+  <div class="meta-card">
+    <div class="meta-grid">
+      <div class="meta-label">Nama Mahasiswa</div>
+      <div class="meta-val"><strong>Aulya Reski</strong></div>
+
+      <div class="meta-label">NIM</div>
+      <div class="meta-val">0110124254</div>
+
+      <div class="meta-label">Institusi / Kampus</div>
+      <div class="meta-val">STT Terpadu Nurul Fikri (STTNF)</div>
+
+      <div class="meta-label">Program Pelatihan</div>
+      <div class="meta-val">NF Academy — Fullstack Web Development</div>
+
+      <div class="meta-label">Mata Kuliah / Modul</div>
+      <div class="meta-val">React JS Lanjutan — CRUD: Update &amp; Delete dengan Axios</div>
+
+      <div class="meta-label">Tautan Repositori GitHub</div>
+      <div class="meta-val">
+        <a class="link-badge" href="https://github.com/0110124254-create/Project-React-JS" target="_blank">
+          https://github.com/0110124254-create/Project-React-JS
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <h2>1. Ringkasan Tugas 2</h2>
+  <p>
+    Melanjutkan Tugas 1 sebelumnya, pada <strong>Tugas 2 React JS Lanjutan</strong> ini mahasiswa diinstruksikan untuk melengkapi siklus penuh operasi CRUD dengan mengimplementasikan fitur <strong>Update</strong> (mengubah data yang sudah ada) dan <strong>Delete</strong> (menghapus data) untuk bagian <strong>Genre</strong> dan <strong>Author (Penulis)</strong> pada tampilan antarmuka Admin.
+  </p>
+  <p>
+    Implementasi fitur Update menggunakan metode HTTP <code>PUT</code> via library <strong>Axios</strong> dengan form yang terisi data awal secara otomatis (*pre-filled*), sedangkan fitur Delete menggunakan metode HTTP <code>DELETE</code> dengan dialog modal konfirmasi interaktif. Seluruh antarmuka dirancang responsif, estetik, dan kreatif menggunakan <strong>Tailwind CSS</strong>.
+  </p>
+
+  <h2>2. Struktur File &amp; Arsitektur Komponen Baru</h2>
+  <p>
+    Komponen baru ditambahkan secara modular untuk menangani rute edit dan update data:
+  </p>
+  <pre>
+src/
+├── services/
+│   └── api.js           # Penambahan updateGenre, getGenreById, updateAuthor, getAuthorById
+├── pages/admin/
+│   ├── genres/
+│   │   ├── index.jsx    # READ &amp; DELETE Genre (Tombol Edit, Tombol Hapus + Modal Konfirmasi)
+│   │   ├── create.jsx   # CREATE Data Genre
+│   │   └── edit.jsx     # UPDATE Data Genre (Pre-filled Form, Live Preview, Axios PUT)
+│   └── authors/
+│       ├── index.jsx    # READ &amp; DELETE Author (Tombol Edit, Tombol Hapus + Modal Konfirmasi)
+│       ├── create.jsx   # CREATE Data Author
+│       └── edit.jsx     # UPDATE Data Author (Pre-filled Form, Live Preview, Axios PUT)
+└── App.jsx              # Pendaftaran Rute /admin/genres/edit/:id dan /admin/authors/edit/:id</pre>
+
+  <h2>3. Implementasi Fitur Update &amp; Delete Data Genre</h2>
+
+  <h3>A. Fitur Update Data Genre (<code>/admin/genres/edit/:id</code>)</h3>
+  <ul>
+    <li><strong>Pengambilan Data Awal:</strong> Mengambil data genre spesifik berdasarkan parameter URL (<code>useParams</code>) melalui fungsi <code>getGenreById(id)</code> secara asinkron saat komponen dirender (<code>useEffect</code>).</li>
+    <li><strong>Form Terisi Otomatis:</strong> Nilai <code>form.name</code> dan <code>form.description</code> langsung terisi dengan data genre yang ada sehingga admin dapat langsung memperbarui field yang diinginkan.</li>
+    <li><strong>Live Preview Real-Time:</strong> Kartu pratinjau langsung memperbarui tampilan badge warna dan teks deskripsi secara instan saat pengguna mengetik perubahan.</li>
+    <li><strong>Pengiriman HTTP PUT:</strong> Data yang diubah dikirimkan ke endpoint <code>PUT /api/genres/{id}</code> menggunakan <code>axios.put</code>.</li>
+    <li><strong>Notifikasi Sukses &amp; Auto-Redirect:</strong> Menampilkan alert feedback berwarna hijau dan mengarahkan kembali ke daftar genre secara otomatis.</li>
+  </ul>
+
+  <h3>B. Fitur Delete Data Genre (<code>/admin/genres</code>)</h3>
+  <ul>
+    <li><strong>Tombol Aksi Terpadu:</strong> Setiap baris pada tabel genre dilengkapi tombol <strong>Edit</strong> (warna indigo) dan tombol <strong>Hapus</strong> (warna merah).</li>
+    <li><strong>Modal Konfirmasi Aman:</strong> Saat tombol Hapus diklik, muncul dialog modal yang menanyakan kepastian penghapusan beserta nama genre terkait untuk mencegah kesalahan tidak sengaja.</li>
+    <li><strong>Pengiriman HTTP DELETE:</strong> Menjalankan fungsi <code>deleteGenre(id)</code> yang mengirimkan permintaan <code>DELETE /api/genres/{id}</code> ke server API dan langsung memutakhirkan state tabel tanpa reload browser.</li>
+  </ul>
+
+  <div class="page-break"></div>
+
+  <h2>4. Implementasi Fitur Update &amp; Delete Data Author</h2>
+
+  <h3>A. Fitur Update Data Author (<code>/admin/authors/edit/:id</code>)</h3>
+  <ul>
+    <li><strong>Pre-filled Form:</strong> Mengisi nilai awal nama lengkap penulis, negara asal (kewarganegaraan), dan biografi dari pemanggilan <code>getAuthorById(id)</code>.</li>
+    <li><strong>Pilihan Cepat Kewarganegaraan:</strong> Tombol pintas (*chips*) negara populer (Indonesia, Jepang, Inggris, Amerika Serikat) mempermudah admin mengganti asal negara dengan satu klik.</li>
+    <li><strong>Live Preview Kartu Penulis:</strong> Menampilkan kartu profil lengkap dengan avatar inisial bergradien warna yang disesuaikan secara real-time.</li>
+    <li><strong>Pengiriman HTTP PUT:</strong> Mengirimkan pembaruan data pengarang ke endpoint <code>PUT /api/authors/{id}</code> menggunakan Axios.</li>
+  </ul>
+
+  <h3>B. Fitur Delete Data Author (<code>/admin/authors</code>)</h3>
+  <ul>
+    <li><strong>Tombol Hapus &amp; Edit pada Tabel:</strong> Setiap pengarang memiliki tombol aksi untuk navigasi ke form edit atau memicu modal hapus.</li>
+    <li><strong>Modal Peringatan:</strong> Pop-up konfirmasi yang jelas menampilkan nama penulis yang akan dihapus.</li>
+    <li><strong>Pengiriman HTTP DELETE:</strong> Menjalankan <code>deleteAuthor(id)</code> via <code>DELETE /api/authors/{id}</code> dan menyinkronkan data secara reaktif.</li>
+  </ul>
+
+  <h2>5. Cuplikan Kode Utama (Update &amp; Delete)</h2>
+
+  <div class="callout">
+    <div class="callout-title">1. Operasi Update via HTTP PUT (Axios)</div>
+    Mengirimkan perubahan data ke endpoint PUT dan memperbarui state:
+  </div>
+  <pre>
+// src/services/api.js - Fungsi updateGenre
+export const updateGenre = async (id, genreData) => {
+  try {
+    const response = await apiClient.put(`/genres/${id}`, genreData);
+    if (response.data && response.data.data) {
+      return { data: response.data.data, source: 'api' };
+    }
+  } catch (err) {
+    console.warn('Backend API offline, update secara lokal:', err.message);
+  }
+  // Pembaruan data pada penyimpanan lokal sebagai fallback
+  const current = getStoredData('app_genres', INITIAL_GENRES);
+  const updatedList = current.map((g) => (String(g.id) === String(id) ? { ...g, ...genreData } : g));
+  setStoredData('app_genres', updatedList);
+  return { data: { id, ...genreData }, source: 'local' };
+};</pre>
+
+  <div class="callout">
+    <div class="callout-title">2. Operasi Delete via HTTP DELETE (Axios)</div>
+    Menghapus data di server backend dan memperbarui state komponen:
+  </div>
+  <pre>
+// src/services/api.js - Fungsi deleteGenre
+export const deleteGenre = async (id) => {
+  try {
+    await apiClient.delete(`/genres/${id}`);
+  } catch (err) {
+    console.warn('Delete via API gagal, menghapus dari lokal:', err.message);
+  }
+  const current = getStoredData('app_genres', INITIAL_GENRES);
+  const updated = current.filter((g) => String(g.id) !== String(id));
+  setStoredData('app_genres', updated);
+  return true;
+};
+
+// Handler Hapus di Component dengan Modal Konfirmasi
+const handleDelete = async () => {
+  if (!deleteModal.item) return;
+  await deleteGenre(deleteModal.item.id);
+  setGenres((prev) => prev.filter((g) => g.id !== deleteModal.item.id));
+  setNotification({ type: 'success', message: `Genre "${deleteModal.item.name}" berhasil dihapus.` });
+  setDeleteModal({ isOpen: false, item: null });
+};</pre>
+
+  <h2>6. Daftar Endpoint REST API</h2>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Entitas</th>
+          <th>Operasi CRUD</th>
+          <th>Metode HTTP</th>
+          <th>Endpoint URL</th>
+          <th>Deskripsi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Genre</td>
+          <td>Read</td>
+          <td><code>GET</code></td>
+          <td><code>/api/genres</code></td>
+          <td>Mengambil seluruh daftar kategori genre</td>
+        </tr>
+        <tr>
+          <td>Genre</td>
+          <td>Create</td>
+          <td><code>POST</code></td>
+          <td><code>/api/genres</code></td>
+          <td>Menyimpan kategori genre baru</td>
+        </tr>
+        <tr style="background: #eef2ff;">
+          <td><strong>Genre</strong></td>
+          <td><strong>Update</strong></td>
+          <td><code><strong>PUT</strong></code></td>
+          <td><code><strong>/api/genres/{id}</strong></code></td>
+          <td><strong>Memperbarui nama dan deskripsi genre</strong></td>
+        </tr>
+        <tr style="background: #fef2f2;">
+          <td><strong>Genre</strong></td>
+          <td><strong>Delete</strong></td>
+          <td><code><strong>DELETE</strong></code></td>
+          <td><code><strong>/api/genres/{id}</strong></code></td>
+          <td><strong>Menghapus genre dari sistem database</strong></td>
+        </tr>
+        <tr>
+          <td>Author</td>
+          <td>Read</td>
+          <td><code>GET</code></td>
+          <td><code>/api/authors</code></td>
+          <td>Mengambil seluruh daftar data pengarang</td>
+        </tr>
+        <tr>
+          <td>Author</td>
+          <td>Create</td>
+          <td><code>POST</code></td>
+          <td><code>/api/authors</code></td>
+          <td>Menyimpan data penulis baru</td>
+        </tr>
+        <tr style="background: #eef2ff;">
+          <td><strong>Author</strong></td>
+          <td><strong>Update</strong></td>
+          <td><code><strong>PUT</strong></code></td>
+          <td><code><strong>/api/authors/{id}</strong></code></td>
+          <td><strong>Memperbarui profil dan biografi penulis</strong></td>
+        </tr>
+        <tr style="background: #fef2f2;">
+          <td><strong>Author</strong></td>
+          <td><strong>Delete</strong></td>
+          <td><code><strong>DELETE</strong></code></td>
+          <td><code><strong>/api/authors/{id}</strong></code></td>
+          <td><strong>Menghapus data pengarang dari sistem</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>7. Petunjuk Pengujian Proyek di Lokal</h2>
+  <ol>
+    <li>Buka terminal pada direktori proyek React JS:
+      <pre>cd "C:\Users\01101\OneDrive\Dokumen\Project React JS\react-js"</pre>
+    </li>
+    <li>Jalankan server pengembangan Vite:
+      <pre>npm.cmd run dev</pre>
+    </li>
+    <li>Buka peramban (browser) untuk menguji fitur Update &amp; Delete:
+      <ul>
+        <li>Daftar Genre (Aksi Edit &amp; Hapus): <code>http://localhost:5173/admin/genres</code></li>
+        <li>Edit Genre #1: <code>http://localhost:5173/admin/genres/edit/1</code></li>
+        <li>Daftar Penulis (Aksi Edit &amp; Hapus): <code>http://localhost:5173/admin/authors</code></li>
+        <li>Edit Penulis #1: <code>http://localhost:5173/admin/authors/edit/1</code></li>
+      </ul>
+    </li>
+  </ol>
+
+  <h2>8. Tautan Repositori GitHub &amp; Undangan Mentor</h2>
+  <ul>
+    <li><strong>URL Repositori:</strong> <a href="https://github.com/0110124254-create/Project-React-JS" target="_blank">https://github.com/0110124254-create/Project-React-JS</a></li>
+    <li><strong>Cabang (Branch):</strong> <code>main</code></li>
+    <li><strong>Status Repositori:</strong> Siap diatur ke <em>Private</em> dan mengundang username mentor masing-masing pada menu <em>Settings &gt; Collaborators</em>.</li>
+  </ul>
+
+</body>
+</html>
