@@ -201,10 +201,10 @@ export default function AdminLayout() {
           <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
             <div className="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl text-xs space-y-1 text-gray-500 dark:text-gray-400">
               <p className="font-semibold text-gray-800 dark:text-gray-200">
-                Tugas 2 React JS Lanjutan
+                Tugas 3 React JS Lanjutan
               </p>
-              <p>Update &amp; Delete Genre + Author</p>
-              <p className="text-[11px] text-gray-400">STTNF · NF Academy</p>
+              <p>Fitur Registrasi Pengguna &amp; CRUD</p>
+              <p className="text-[11px] text-gray-400">Aulya Reski · STTNF</p>
             </div>
           </div>
         </div>

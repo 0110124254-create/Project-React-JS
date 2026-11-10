@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Laporan Tugas 3 React JS Lanjutan - Aulya Reski (0110124254)</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.55;
+      font-size: 11pt;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+    .header-table {
+      width: 100%;
+      border-bottom: 2.5px solid #4f46e5;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+    .logo-badge {
+      display: inline-block;
+      background: #4f46e5;
+      color: #ffffff;
+      font-weight: 900;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 14pt;
+      letter-spacing: 0.5px;
+    }
+    .main-title {
+      font-size: 18pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 4px 0 2px 0;
+    }
+    .sub-title {
+      font-size: 11pt;
+      color: #475569;
+      font-weight: 600;
+    }
+    .meta-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+    }
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .meta-table td {
+      padding: 4px 8px;
+      font-size: 10.5pt;
+      vertical-align: top;
+    }
+    .meta-table .label {
+      width: 28%;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .meta-table .val {
+      color: #0f172a;
+      font-weight: 700;
+    }
+    .meta-table .link {
+      color: #4f46e5;
+      word-break: break-all;
+      text-decoration: underline;
+    }
+    h2 {
+      font-size: 13pt;
+      color: #1e1b4b;
+      border-left: 4px solid #4f46e5;
+      padding-left: 10px;
+      margin-top: 22px;
+      margin-bottom: 10px;
+    }
+    h3 {
+      font-size: 11pt;
+      color: #312e81;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+    p, li {
+      text-align: justify;
+      color: #334155;
+      font-size: 10.5pt;
+    }
+    ul, ol {
+      margin-top: 6px;
+      margin-bottom: 12px;
+      padding-left: 22px;
+    }
+    li {
+      margin-bottom: 4px;
+    }
+    .badge {
+      display: inline-block;
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 9pt;
+      font-weight: 700;
+      font-family: monospace;
+    }
+    .feature-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid #6366f1;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+    .feature-card h4 {
+      margin: 0 0 6px 0;
+      font-size: 11pt;
+      color: #1e293b;
+      font-weight: 700;
+    }
+    .code-box {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 8.5pt;
+      line-height: 1.45;
+      overflow-x: auto;
+      margin: 8px 0;
+      page-break-inside: avoid;
+    }
+    .page-break {
+      page-break-after: always;
+    }
+    .footer-note {
+      margin-top: 25px;
+      padding-top: 10px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 9pt;
+      color: #64748b;
+      text-align: center;
+    }
+    .checklist {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .checklist li {
+      padding-left: 24px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .checklist li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: #16a34a;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER DOKUMEN -->
+  <table class="header-table">
+    <tr>
+      <td style="vertical-align: middle;">
+        <div class="logo-badge">STTNF · NF ACADEMY</div>
+        <div class="main-title">LAPORAN TUGAS REACT JS LANJUTAN #3</div>
+        <div class="sub-title">Implementasi Fitur Registrasi Pengguna & Validasi Form Interaktif</div>
+      </td>
+      <td style="text-align: right; vertical-align: middle; width: 35%;">
+        <div style="font-size: 9.5pt; color: #64748b; line-height: 1.4;">
+          <strong>STT Terpadu Nurul Fikri</strong><br>
+          Fullstack Web Development<br>
+          Tanggal: 10 November 2026
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- METADATA MAHASISWA & TUGAS -->
+  <div class="meta-box">
+    <table class="meta-table">
+      <tr>
+        <td class="label">Nama Lengkap</td>
+        <td class="val">: Aulya Reski</td>
+        <td class="label">Mata Kuliah</td>
+        <td class="val">: React JS Lanjutan</td>
+      </tr>
+      <tr>
+        <td class="label">NIM</td>
+        <td class="val">: 0110124254</td>
+        <td class="label">Topik Penugasan</td>
+        <td class="val">: Fitur Registrasi Pengguna (Tugas 3)</td>
+      </tr>
+      <tr>
+        <td class="label">Program Studi</td>
+        <td class="val">: Teknik Informatika / Fullstack</td>
+        <td class="label">Status Repositori</td>
+        <td class="val">: Private (Mentor Invited)</td>
+      </tr>
+      <tr>
+        <td class="label">Tautan GitHub</td>
+        <td class="val" colspan="3">: <a class="link" href="https://github.com/0110124254-create/Project-React-JS">https://github.com/0110124254-create/Project-React-JS</a></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 1. DESKRIPSI & TUJUAN TUGAS -->
+  <h2>1. Deskripsi & Tujuan Tugas</h2>
+  <p>
+    Tugas ini bertujuan mengembangkan <strong>Fitur Registrasi Pengguna</strong> sebagai bagian penting dalam pengembangan aplikasi perpustakaan dan buku digital <em>Ruang Baca</em> berbasis <strong>React JS</strong>. Antarmuka dirancang secara kreatif, modern, dan sangat responsif dengan Tailwind CSS, dilengkapi alur penanganan formulir yang handal menggunakan React Controlled Components, validasi formulir real-time, dan umpan balik pengguna yang interaktif.
+  </p>
+
+  <!-- 2. PEMENUHAN KRITERIA UMUM -->
+  <h2>2. Pemenuhan Kriteria Umum Penugasan</h2>
+  <ul class="checklist">
+    <li><strong>Form Registrasi Lengkap:</strong> Memuat field <em>Nama Lengkap</em>, <em>Username</em>, <em>Alamat Email</em>, <em>Kata Sandi</em>, <em>Konfirmasi Sandi</em>, dan <em>Persetujuan Syarat & Ketentuan</em>.</li>
+    <li><strong>Validasi Formulir Komprehensif:</strong> Pengecekan field tidak boleh kosong, minimal karakter (nama & username min 3 karakter, sandi min 6 karakter), format email valid berbasis regex, username alfanumerik tanpa spasi, serta kesesuaian konfirmasi sandi.</li>
+    <li><strong>Komponen React Efektif & Efisien:</strong> Penggunaan <code>useState</code> untuk state form, error, touched, dan UI; event handler modular (<code>handleChange</code>, <code>handleBlur</code>, <code>handleSubmit</code>); serta navigasi mulus menggunakan <code>useNavigate</code> dan <code>react-router-dom</code>.</li>
+    <li><strong>Kreativitas Antarmuka (UI/UX Kreatif):</strong> Panel <em>Split-Screen</em> modern dengan kartu keanggotaan digital real-time (<strong>Live Digital Membership Card Preview</strong>), <strong>Password Strength Visual Meter</strong>, dan dialog modal sukses registrasi dengan hitung mundur otomatis.</li>
+    <li><strong>Struktur Folder Rapi & Kode Bersih:</strong> Pemisahan yang jelas antara halaman otentikasi (<code>src/pages/auth/register.jsx</code>), lapisan komunikasi data (<code>src/services/api.js</code>), serta antarmuka login (<code>src/pages/auth/login.jsx</code>).</li>
+  </ul>
+
+  <!-- 3. DETAIL FITUR & KREATIVITAS UI -->
+  <h2>3. Rincian Fitur & Kreativitas Desain Antarmuka</h2>
+
+  <div class="feature-card">
+    <h4>A. Live Digital Membership Card Preview (Kreativitas Utama)</h4>
+    <p>
+      Di sebelah kiri form registrasi, terdapat kartu keanggotaan digital bergaya kartu identitas perpustakaan eksklusif dengan gradien warna ungu-indigo. Setiap kali calon pengguna mengetikkan nama, username, atau email, kartu identitas tersebut langsung ter-update secara <em>real-time</em>:
+    </p>
+    <ul>
+      <li>Inisial avatar dihasilkan otomatis dari nama pengguna (contoh: "AR" untuk Aulya Reski).</li>
+      <li>Badge status dinamis: <em>"Calon Anggota"</em> berubah menjadi <em>"Terverifikasi"</em> saat checkbox persetujuan dicentang.</li>
+      <li>Nomor ID anggota digital digenerate otomatis berdasarkan potongan username.</li>
+    </ul>
+  </div>
+
+  <div class="feature-card">
+    <h4>B. Password Strength Meter (Indikator Kekuatan Sandi)</h4>
+    <p>
+      Menganalisis kata sandi secara instan saat pengguna mengetik, mengevaluasi panjang karakter, keberadaan angka, huruf kapital, dan simbol khusus. Menampilkan visualisasi progress bar berwarna dinamis (Merah: Sangat Lemah, Kuning: Cukup, Hijau: Kuat, Indigo: Sangat Kuat).
+    </p>
+  </div>
+
+  <div class="feature-card">
+    <h4>C. Validasi Multi-Tahap (OnBlur & OnChange)</h4>
+    <p>
+      Menerapkan pola interaksi UX terbaik: validasi pada <code>onBlur</code> agar pengguna tidak terganggu saat pertama kali mengetik, dan validasi pada <code>onChange</code> segera setelah field pernah mengalami error sehingga pesan kesalahan langsung hilang begitu pengguna mengetikkan format yang benar.
+    </p>
+  </div>
+
+  <div class="page-break"></div>
+
+  <div class="feature-card">
+    <h4>D. Arsitektur Dual-Layer Storage (API Sanctum + LocalStorage Fallback)</h4>
+    <p>
+      Sistem dirancang dengan arsitektur tangguh dua lapis pada <code>src/services/api.js</code>:
+    </p>
+    <ul>
+      <li><strong>Lapisan 1 (Online):</strong> Melakukan HTTP <code>POST /api/register</code> ke backend Laravel Sanctum dengan hashing kata sandi dan validasi database SQLite.</li>
+      <li><strong>Lapisan 2 (Offline Fallback):</strong> Jika server backend tidak sedang aktif, sistem secara cerdas menyimpan pengguna baru ke <code>localStorage</code> (<code>app_registered_users</code>), termasuk memeriksa keunikan email dan username, sehingga penguji/dosen tetap dapat menguji fungsionalitas registrasi dan login secara mandiri tanpa setup server tambahan.</li>
+    </ul>
+  </div>
+
+  <!-- 4. STRUKTUR KODE & IMPLEMENTASI UTAMA -->
+  <h2>4. Cuplikan Kode Program Utama</h2>
+
+  <h3>A. Implementasi Validasi & Form Handling (src/pages/auth/register.jsx)</h3>
+  <div class="code-box">
+// Validasi field modular pada register.jsx
+const validateField = (name, value, allValues = formData) => {
+  let error = "";
+  switch (name) {
+    case "name":
+      if (!value.trim()) error = "Nama lengkap wajib diisi.";
+      else if (value.trim().length < 3) error = "Nama lengkap minimal 3 karakter.";
+      break;
+    case "username":
+      if (!value.trim()) error = "Username wajib diisi.";
+      else if (value.trim().length < 3) error = "Username minimal 3 karakter.";
+      else if (!/^[a-zA-Z0-9_.-]+$/.test(value)) error = "Username hanya alfanumerik tanpa spasi.";
+      break;
+    case "email":
+      if (!value.trim()) error = "Alamat email wajib diisi.";
+      else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) error = "Format email tidak valid.";
+      break;
+    case "password":
+      if (!value) error = "Kata sandi wajib diisi.";
+      else if (value.length < 6) error = "Kata sandi minimal 6 karakter.";
+      break;
+    case "password_confirmation":
+      if (value !== allValues.password) error = "Konfirmasi kata sandi tidak cocok.";
+      break;
+    case "agreeTerms":
+      if (!value) error = "Anda harus menyetujui Syarat dan Ketentuan layanan.";
+      break;
+  }
+  return error;
+};
+  </div>
+
+  <h3>B. Service Registrasi Dual-Layer (src/services/api.js)</h3>
+  <div class="code-box">
+export const registerUser = async (userData) => {
+  let createdUser = null;
+  let token = null;
+  let source = 'local';
+
+  // 1. Coba registrasi ke API Laravel
+  try {
+    const response = await apiClient.post('/register', userData);
+    if (response.data?.success) {
+      createdUser = response.data.data.user;
+      token = response.data.data.token;
+      source = 'api';
+    }
+  } catch (err) {
+    console.warn('API offline, menggunakan fallback penyimpanan lokal');
+  }
+
+  // 2. Fallback sinkronisasi ke LocalStorage (app_registered_users)
+  const currentUsers = getStoredData('app_registered_users', INITIAL_USERS);
+  if (!createdUser) {
+    createdUser = {
+      id: Date.now(),
+      name: userData.name,
+      username: userData.username,
+      email: userData.email,
+      created_at: new Date().toISOString(),
+    };
+    token = 'mock-sanctum-token-' + Date.now();
+  }
+
+  setStoredData('app_registered_users', [createdUser, ...currentUsers]);
+  return { success: true, data: { user: createdUser, token }, source };
+};
+  </div>
+
+  <!-- 5. PETUNJUK PENGUJIAN & KOLABORASI GITHUB -->
+  <h2>5. Petunjuk Pengujian Aplikasi & Kolaborator GitHub</h2>
+  <ol>
+    <li>
+      <strong>Repositori GitHub:</strong> Repositori telah dibuat secara privat di:
+      <br>
+      <a class="link" href="https://github.com/0110124254-create/Project-React-JS">https://github.com/0110124254-create/Project-React-JS</a>
+    </li>
+    <li>
+      <strong>Undangan Kolaborator Mentor:</strong> Masuk ke tab <em>Settings</em> &gt; <em>Collaborators</em> &gt; <em>Add people</em>, lalu masukkan username GitHub mentor Anda untuk memberikan hak akses repositori privat.
+    </li>
+    <li>
+      <strong>Menjalankan Aplikasi Frontend:</strong>
+      <div class="code-box">
+cd "Project React JS/react-js"
+npm install
+npm run dev
+# Buka http://localhost:5173/register di browser
+      </div>
+    </li>
+    <li>
+      <strong>Uji Alur Registrasi ke Login:</strong>
+      <ul>
+        <li>Isi nama lengkap, username, email, kata sandi, dan konfirmasi sandi pada halaman <code>/register</code>.</li>
+        <li>Amati perubahan real-time pada <em>Live Membership Card Preview</em> dan <em>Password Strength Meter</em>.</li>
+        <li>Klik tombol <em>"Daftar Sekarang"</em>. Modal dialog sukses akan muncul menampilkan kartu data pengguna baru.</li>
+        <li>Sistem akan mengarahkan secara otomatis dalam 4 detik ke halaman <code>/login</code> dengan email yang telah terisi otomatis.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <!-- 6. PERNYATAAN ORISINALITAS -->
+  <h2>6. Pernyataan Orisinalitas Karya</h2>
+  <p>
+    Saya yang bertanda tangan di bawah ini menyatakan bahwa seluruh kode sumber dan laporan <strong>Tugas React JS Lanjutan #3</strong> ini dibuat secara mandiri, tanpa tindakan plagiasi, serta mencerminkan pemahaman penuh terhadap konsep komponen React, state management, dan arsitektur form modern.
+  </p>
+  <table style="width: 100%; margin-top: 18px;">
+    <tr>
+      <td style="width: 60%;"></td>
+      <td style="text-align: center;">
+        Depok, 10 November 2026<br>
+        Mahasiswa Pengembang,<br><br><br><br>
+        <strong>Aulya Reski</strong><br>
+        NIM: 0110124254
+      </td>
+    </tr>
+  </table>
+
+  <div class="footer-note">
+    Laporan Tugas React JS Lanjutan #3 · Sekolah Tinggi Teknologi Terpadu Nurul Fikri · NF Academy 2026
+  </div>
+
+</body>
+</html>

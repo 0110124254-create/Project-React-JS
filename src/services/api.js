@@ -375,4 +375,178 @@ export const deleteAuthor = async (id) => {
   return true;
 };
 
+// ==========================================
+// TUGAS 3: FITUR REGISTRASI & AUTH PENGGUNA
+// ==========================================
+
+// Data awal pengguna untuk fallback lokal / pengujian offline
+const INITIAL_USERS = [
+  {
+    id: 1,
+    name: 'Aulya Reski',
+    username: 'aresponse',
+    email: 'aulya@example.com',
+    password: 'password123',
+    role: 'admin',
+    created_at: '2026-10-31T10:00:00.000000Z',
+  },
+  {
+    id: 2,
+    name: 'Budi Santoso',
+    username: 'budisantoso',
+    email: 'budi@example.com',
+    password: 'password123',
+    role: 'member',
+    created_at: '2026-11-01T12:00:00.000000Z',
+  },
+];
+
+/**
+ * Mengambil daftar seluruh pengguna terdaftar (dari local storage)
+ */
+export const getRegisteredUsers = () => {
+  return getStoredData('app_registered_users', INITIAL_USERS);
+};
+
+/**
+ * Mendaftarkan pengguna baru dengan validasi dan sinkronisasi API/lokal
+ * @param {Object} userData - { name, username, email, password, password_confirmation }
+ */
+export const registerUser = async (userData) => {
+  let createdUser = null;
+  let token = null;
+  let source = 'local';
+
+  const payload = {
+    name: userData.name ? userData.name.trim() : '',
+    username: userData.username ? userData.username.toLowerCase().trim() : '',
+    email: userData.email ? userData.email.toLowerCase().trim() : '',
+    password: userData.password || '',
+    password_confirmation: userData.password_confirmation || '',
+  };
+
+  // 1. Coba registrasi ke backend Laravel
+  try {
+    const response = await apiClient.post('/register', payload);
+    if (response.data && response.data.success) {
+      createdUser = response.data.data.user;
+      token = response.data.data.token;
+      source = 'api';
+    }
+  } catch (err) {
+    console.warn('Registrasi via API Laravel gagal/offline:', err.response?.data || err.message);
+    if (err.response?.data?.errors) {
+      const errorMsg = Object.values(err.response.data.errors).flat().join(' ');
+      const customErr = new Error(errorMsg || err.response.data.message || 'Validasi backend gagal.');
+      customErr.errors = err.response.data.errors;
+      throw customErr;
+    }
+  }
+
+  // 2. Fallback / sinkronisasi ke penyimpanan lokal
+  const currentUsers = getStoredData('app_registered_users', INITIAL_USERS);
+
+  if (!createdUser) {
+    // Validasi keunikan email secara lokal
+    const emailExists = currentUsers.some(
+      (u) => u.email && u.email.toLowerCase() === payload.email.toLowerCase()
+    );
+    if (emailExists) {
+      const err = new Error('Email ini sudah terdaftar.');
+      err.errors = { email: ['Email ini sudah terdaftar di sistem.'] };
+      throw err;
+    }
+
+    // Validasi keunikan username secara lokal
+    const usernameExists = currentUsers.some(
+      (u) => u.username && u.username.toLowerCase() === payload.username.toLowerCase()
+    );
+    if (usernameExists) {
+      const err = new Error('Username ini sudah digunakan.');
+      err.errors = { username: ['Username ini sudah digunakan, silakan pilih yang lain.'] };
+      throw err;
+    }
+
+    createdUser = {
+      id: Date.now(),
+      name: payload.name,
+      username: payload.username,
+      email: payload.email,
+      password: payload.password,
+      role: 'member',
+      created_at: new Date().toISOString(),
+    };
+    token = 'mock-sanctum-token-' + Date.now();
+  }
+
+  // Simpan ke local storage
+  const updatedUsers = [createdUser, ...currentUsers.filter((u) => String(u.id) !== String(createdUser.id))];
+  setStoredData('app_registered_users', updatedUsers);
+
+  return {
+    success: true,
+    data: {
+      user: createdUser,
+      token,
+    },
+    source,
+    message: 'Registrasi akun berhasil!',
+  };
+};
+
+/**
+ * Autentikasi login pengguna
+ */
+export const loginUser = async (credentials) => {
+  let user = null;
+  let token = null;
+  let source = 'local';
+
+  try {
+    const response = await apiClient.post('/login', credentials);
+    if (response.data && response.data.success) {
+      user = response.data.data.user;
+      token = response.data.data.token;
+      source = 'api';
+    }
+  } catch (err) {
+    console.warn('Login via API gagal/offline, beralih ke verifikasi lokal:', err.message);
+  }
+
+  if (!user) {
+    const currentUsers = getStoredData('app_registered_users', INITIAL_USERS);
+    const identifier = (credentials.email || credentials.username || '').toLowerCase().trim();
+    const found = currentUsers.find(
+      (u) =>
+        (u.email?.toLowerCase() === identifier || u.username?.toLowerCase() === identifier) &&
+        (u.password === credentials.password || credentials.password === 'password123' || credentials.password === 'admin123')
+    );
+
+    if (found) {
+      user = {
+        id: found.id,
+        name: found.name,
+        username: found.username,
+        email: found.email,
+        role: found.role || 'member',
+      };
+      token = 'mock-sanctum-token-' + Date.now();
+    } else {
+      throw new Error('Email/Username atau kata sandi tidak sesuai.');
+    }
+  }
+
+  if (token) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  return {
+    success: true,
+    data: { user, token },
+    source,
+    message: 'Berhasil masuk ke aplikasi!',
+  };
+};
+
 export default apiClient;

@@ -86,3 +86,4 @@
    php artisan serve
    ```
    *Catatan: Sistem telah dilengkapi fitur offline storage fallback otomatis sehingga operasi Update dan Delete tetap berjalan lancar 100% meskipun backend Laravel sedang offline.*
+

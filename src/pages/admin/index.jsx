@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getGenres, getAuthors } from "../../services/api";
+import { getGenres, getAuthors, getRegisteredUsers } from "../../services/api";
 
 export default function Dashboard() {
   const [counts, setCounts] = useState({
@@ -8,6 +8,7 @@ export default function Dashboard() {
     authors: 0,
     books: 9,
     transactions: 3,
+    users: 0,
   });
   const [loading, setLoading] = useState(true);
 
@@ -18,10 +19,12 @@ export default function Dashboard() {
           getGenres(),
           getAuthors(),
         ]);
+        const registeredUsers = getRegisteredUsers();
         setCounts((prev) => ({
           ...prev,
           genres: genreRes.data.length,
           authors: authorRes.data.length,
+          users: registeredUsers.length,
         }));
       } catch (e) {
         console.error("Dashboard data load error:", e);
@@ -142,27 +145,27 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Card Transactions */}
-        <div className="p-5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:border-amber-300 dark:hover:border-amber-600 transition">
+        {/* Card Users (Tugas 3) */}
+        <div className="p-5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm hover:border-blue-300 dark:hover:border-blue-600 transition">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-              Transaksi
+              Anggota Terdaftar
             </span>
-            <div className="w-10 h-10 rounded-lg bg-amber-50 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 flex items-center justify-center">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
               </svg>
             </div>
           </div>
           <div className="mt-4 flex items-baseline justify-between">
             <span className="text-2xl font-bold text-gray-900 dark:text-white">
-              {counts.transactions}
+              {loading ? "..." : counts.users}
             </span>
             <Link
-              to="/admin/transactions"
-              className="text-xs font-semibold text-amber-600 dark:text-amber-400 hover:underline"
+              to="/register"
+              className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
             >
-              Lihat Transaksi →
+              Uji Registrasi →
             </Link>
           </div>
         </div>
@@ -172,23 +175,27 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="p-6 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm space-y-4">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
-            <span>📌</span> Tugas 2 React JS Lanjutan
+            <span>✨</span> Tugas 3 React JS Lanjutan — Registrasi Pengguna
           </h2>
           <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-            Implementasi penuh operasi <strong>CRUD (Create, Read, Update, Delete)</strong> di React JS menggunakan teknik <strong>Asynchronous</strong> dan pustaka <strong>Axios</strong> untuk entitas:
+            Fitur <strong>Registrasi Pengguna</strong> baru berbasis React JS dengan desain modern, responsif, dan validasi form komprehensif:
           </p>
           <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
             <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span><strong>Genre (CRUD):</strong> Read (<code>GET</code>), Create (<code>POST</code>), Update (<code>PUT</code>), &amp; Delete (<code>DELETE</code>) via <code>/api/genres</code>.</span>
+              <span><strong>Form Fields:</strong> Nama lengkap, email, username unik, kata sandi, dan konfirmasi sandi.</span>
             </li>
             <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span><strong>Author (CRUD):</strong> Read (<code>GET</code>), Create (<code>POST</code>), Update (<code>PUT</code>), &amp; Delete (<code>DELETE</code>) via <code>/api/authors</code>.</span>
+              <span><strong>Validasi Lengkap:</strong> Format email valid, username karakter alfanumerik, sandi minimal 6 karakter.</span>
             </li>
             <li className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-indigo-500" />
-              <span><strong>Desain Interaktif:</strong> Live Preview real-time, validasi form, modal dialog konfirmasi, dan status bar API.</span>
+              <span><strong>Kreativitas UI/UX:</strong> Real-time Live Membership Card Preview, password strength meter, dan countdown modal redirect.</span>
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-indigo-500" />
+              <span><strong>Arsitektur Dual-Layer:</strong> Sinkronisasi API Laravel Sanctum <code>POST /api/register</code> + LocalStorage fallback.</span>
             </li>
           </ul>
         </div>

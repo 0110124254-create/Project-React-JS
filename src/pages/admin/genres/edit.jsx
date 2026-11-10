@@ -287,3 +287,4 @@ export default function GenreEdit() {
     </div>
   );
 }
+
