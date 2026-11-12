@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { loginUser } from "../../services/api";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { login } = useAuth();
 
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -13,7 +14,7 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successNotice, setSuccessNotice] = useState("");
 
-  // Menangkap data operan dari halaman registrasi
+  // Menangkap data operan dari halaman registrasi atau protected route redirect
   useEffect(() => {
     if (location.state?.registeredEmail) {
       setIdentifier(location.state.registeredEmail);
@@ -23,16 +24,21 @@ export default function Login() {
     }
   }, [location.state]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleLoginSubmit = async (customCreds = null) => {
     setErrorMessage("");
     setSuccessNotice("");
 
-    if (!identifier.trim()) {
+    const creds = customCreds || {
+      email: identifier.trim(),
+      username: identifier.trim(),
+      password,
+    };
+
+    if (!creds.email && !creds.username) {
       setErrorMessage("Silakan masukkan email atau username Anda.");
       return;
     }
-    if (!password) {
+    if (!creds.password) {
       setErrorMessage("Silakan masukkan kata sandi.");
       return;
     }
@@ -40,14 +46,18 @@ export default function Login() {
     setLoading(true);
 
     try {
-      await loginUser({
-        email: identifier.trim(),
-        username: identifier.trim(),
-        password,
-      });
+      const loggedUser = await login(creds);
 
-      // Arahkan ke panel admin setelah login
-      navigate("/admin");
+      // Cek apakah ada redirect tujuan asal (protected route)
+      const redirectFrom = location.state?.from;
+
+      if (redirectFrom) {
+        navigate(redirectFrom, { replace: true });
+      } else if (loggedUser.role === "admin" || loggedUser.is_admin) {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/user/profile", { replace: true });
+      }
     } catch (err) {
       console.error("Login gagal:", err);
       setErrorMessage(
@@ -55,6 +65,30 @@ export default function Login() {
       );
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLoginSubmit();
+  };
+
+  // Demo Login Cepat untuk Evaluator/Dosen
+  const handleQuickDemoLogin = (roleType) => {
+    if (roleType === "admin") {
+      setIdentifier("admin@ruangbaca.com");
+      setPassword("password123");
+      handleLoginSubmit({
+        email: "admin@ruangbaca.com",
+        password: "password123",
+      });
+    } else {
+      setIdentifier("user@ruangbaca.com");
+      setPassword("password123");
+      handleLoginSubmit({
+        email: "user@ruangbaca.com",
+        password: "password123",
+      });
     }
   };
 
@@ -76,14 +110,44 @@ export default function Login() {
             Masuk ke Akun Anda
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
-            Gunakan email atau username terdaftar untuk mengakses koleksi bacaan.
+            Gunakan email atau username terdaftar untuk mengakses layanan sesuai hak akses peran Anda.
           </p>
         </div>
 
         {/* Card Box */}
         <div className="bg-white dark:bg-slate-900 py-8 px-6 sm:px-10 shadow-xl shadow-slate-200/50 dark:shadow-none rounded-3xl border border-slate-200/80 dark:border-slate-800">
           
-          {/* Banner Notifikasi Registrasi Sukses */}
+          {/* Quick Demo Login Preset Buttons (Fitur Khusus Tugas 4) */}
+          <div className="mb-6 p-3.5 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-800 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-indigo-900 dark:text-indigo-300">
+                🚀 Uji Peran Cepat (Tugas 4 RBAC)
+              </span>
+              <span className="text-[10px] font-medium text-indigo-600 dark:text-indigo-400">1-Klik Masuk</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => handleQuickDemoLogin("admin")}
+                disabled={loading}
+                className="py-2 px-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white transition shadow-sm flex items-center justify-center gap-1 cursor-pointer disabled:opacity-50"
+              >
+                <span>👑</span>
+                <span>Masuk Admin</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleQuickDemoLogin("user")}
+                disabled={loading}
+                className="py-2 px-2.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-600 text-white transition shadow-sm flex items-center justify-center gap-1 cursor-pointer disabled:opacity-50"
+              >
+                <span>👤</span>
+                <span>Masuk User</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Banner Notifikasi / Protected Route Notice */}
           {successNotice && (
             <div className="mb-5 p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-300 text-xs sm:text-sm flex items-start gap-2.5">
               <svg className="w-5 h-5 shrink-0 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,7 +188,7 @@ export default function Login() {
                   type="text"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="nama@email.com atau @username"
+                  placeholder="admin@ruangbaca.com atau user@ruangbaca.com"
                   required
                   className="block w-full pl-10 pr-3.5 py-2.5 text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900/30 focus:border-indigo-500 transition"
                 />
@@ -140,16 +204,7 @@ export default function Login() {
                 >
                   Kata Sandi
                 </label>
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    alert("Untuk demo pengujian, silakan gunakan kata sandi yang Anda daftarkan atau 'password123'.");
-                  }}
-                  className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline"
-                >
-                  Lupa sandi?
-                </a>
+                <span className="text-[11px] text-slate-400">Demo: password123</span>
               </div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -199,7 +254,7 @@ export default function Login() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    <span>Memverifikasi...</span>
+                    <span>Memverifikasi Hak Akses...</span>
                   </>
                 ) : (
                   <span>Masuk ke Akun</span>

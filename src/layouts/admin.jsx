@@ -1,6 +1,25 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 export default function AdminLayout() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
+  const getInitials = (name) => {
+    if (!name) return "AD";
+    return name
+      .split(" ")
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((w) => w[0].toUpperCase())
+      .join("");
+  };
+
   const navItemClass = ({ isActive }) =>
     `flex items-center p-2.5 text-sm font-medium rounded-lg transition duration-75 group ${
       isActive
@@ -62,16 +81,23 @@ export default function AdminLayout() {
 
             <div className="flex items-center gap-2.5 pl-3 border-l border-gray-200 dark:border-gray-700">
               <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-600 text-white flex items-center justify-center font-bold text-xs shadow-sm">
-                AR
+                {getInitials(user?.name)}
               </div>
               <div className="hidden sm:block text-left">
                 <div className="text-xs font-semibold text-gray-900 dark:text-white leading-tight">
-                  Aulya Reski
+                  {user?.name || "Administrator"}
                 </div>
-                <div className="text-[10px] text-gray-400">
-                  Administrator
+                <div className="text-[10px] text-indigo-600 dark:text-indigo-400 font-semibold uppercase">
+                  Role: Administrator
                 </div>
               </div>
+              <button
+                onClick={handleLogout}
+                className="ml-1 text-xs text-rose-600 hover:text-rose-700 dark:text-rose-400 p-1.5 rounded hover:bg-rose-50 dark:hover:bg-rose-950/40 font-semibold transition"
+                title="Keluar dari Admin"
+              >
+                Keluar
+              </button>
             </div>
           </div>
         </div>
@@ -98,8 +124,7 @@ export default function AdminLayout() {
                       fill="currentColor"
                       viewBox="0 0 20 20"
                     >
-                      <path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z" />
-                      <path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z" />
+                      <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
                     </svg>
                     <span>Dashboard</span>
                   </NavLink>
@@ -109,7 +134,7 @@ export default function AdminLayout() {
 
             <div>
               <p className="px-3 mb-2 text-xs font-semibold uppercase tracking-wider text-gray-400">
-                Kelola Data Master
+                Master Data (CRUD)
               </p>
               <ul className="space-y-1">
                 <li>
@@ -128,8 +153,8 @@ export default function AdminLayout() {
                         d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
                       />
                     </svg>
-                    <span>Data Genre</span>
-                    <span className="ml-auto text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300">
+                    <span className="flex-1">Data Genre</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300 font-semibold">
                       CRUD
                     </span>
                   </NavLink>
@@ -150,8 +175,8 @@ export default function AdminLayout() {
                         d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
                       />
                     </svg>
-                    <span>Data Penulis</span>
-                    <span className="ml-auto text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded bg-indigo-100 text-indigo-700 dark:bg-indigo-900/60 dark:text-indigo-300">
+                    <span className="flex-1">Data Penulis</span>
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-300 font-semibold">
                       CRUD
                     </span>
                   </NavLink>
@@ -199,11 +224,11 @@ export default function AdminLayout() {
           </div>
 
           <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-            <div className="p-3 bg-gray-50 dark:bg-gray-700/50 rounded-xl text-xs space-y-1 text-gray-500 dark:text-gray-400">
+            <div className="p-3 bg-gray-50 dark:bg-gray-750 rounded-xl text-xs space-y-1 text-gray-500 dark:text-gray-400">
               <p className="font-semibold text-gray-800 dark:text-gray-200">
-                Tugas 3 React JS Lanjutan
+                Tugas 4 React JS Lanjutan
               </p>
-              <p>Fitur Registrasi Pengguna &amp; CRUD</p>
+              <p>Routing &amp; Hak Akses Pengguna (RBAC)</p>
               <p className="text-[11px] text-gray-400">Aulya Reski · STTNF</p>
             </div>
           </div>

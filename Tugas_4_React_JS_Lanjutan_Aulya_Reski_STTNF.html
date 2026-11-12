@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Laporan Tugas 4 React JS Lanjutan - Aulya Reski (0110124254)</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm 18mm 16mm;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.55;
+      font-size: 11pt;
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+    }
+    .header-table {
+      width: 100%;
+      border-bottom: 2.5px solid #4f46e5;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+    .logo-badge {
+      display: inline-block;
+      background: #4f46e5;
+      color: #ffffff;
+      font-weight: 900;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 14pt;
+      letter-spacing: 0.5px;
+    }
+    .main-title {
+      font-size: 18pt;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 4px 0 2px 0;
+    }
+    .sub-title {
+      font-size: 11pt;
+      color: #475569;
+      font-weight: 600;
+    }
+    .meta-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+    }
+    .meta-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .meta-table td {
+      padding: 4px 8px;
+      font-size: 10.5pt;
+      vertical-align: top;
+    }
+    .meta-table .label {
+      width: 28%;
+      color: #64748b;
+      font-weight: 600;
+    }
+    .meta-table .val {
+      color: #0f172a;
+      font-weight: 700;
+    }
+    .meta-table .link {
+      color: #4f46e5;
+      word-break: break-all;
+      text-decoration: underline;
+    }
+    h2 {
+      font-size: 13pt;
+      color: #1e1b4b;
+      border-left: 4px solid #4f46e5;
+      padding-left: 10px;
+      margin-top: 22px;
+      margin-bottom: 10px;
+    }
+    h3 {
+      font-size: 11pt;
+      color: #312e81;
+      margin-top: 14px;
+      margin-bottom: 6px;
+    }
+    p, li {
+      text-align: justify;
+      color: #334155;
+      font-size: 10.5pt;
+    }
+    ul, ol {
+      margin-top: 6px;
+      margin-bottom: 12px;
+      padding-left: 22px;
+    }
+    li {
+      margin-bottom: 4px;
+    }
+    .badge {
+      display: inline-block;
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 9pt;
+      font-weight: 700;
+      font-family: monospace;
+    }
+    .feature-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid #6366f1;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      page-break-inside: avoid;
+    }
+    .feature-card h4 {
+      margin: 0 0 6px 0;
+      font-size: 11pt;
+      color: #1e293b;
+      font-weight: 700;
+    }
+    .code-box {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 8.5pt;
+      line-height: 1.45;
+      overflow-x: auto;
+      margin: 8px 0;
+      page-break-inside: avoid;
+    }
+    .table-data {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 10pt;
+    }
+    .table-data th, .table-data td {
+      border: 1px solid #cbd5e1;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    .table-data th {
+      background: #f1f5f9;
+      color: #1e293b;
+      font-weight: 700;
+    }
+    .page-break {
+      page-break-after: always;
+    }
+    .footer-note {
+      margin-top: 25px;
+      padding-top: 10px;
+      border-top: 1px dashed #cbd5e1;
+      font-size: 9pt;
+      color: #64748b;
+      text-align: center;
+    }
+    .checklist {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .checklist li {
+      padding-left: 24px;
+      position: relative;
+      margin-bottom: 6px;
+    }
+    .checklist li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      color: #16a34a;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER DOKUMEN -->
+  <table class="header-table">
+    <tr>
+      <td style="vertical-align: middle;">
+        <div class="logo-badge">STTNF · NF ACADEMY</div>
+        <div class="main-title">LAPORAN TUGAS REACT JS LANJUTAN #4</div>
+        <div class="sub-title">Implementasi Routing & Hak Akses Pengguna (Role-Based Access Control)</div>
+      </td>
+      <td style="text-align: right; vertical-align: middle; width: 35%;">
+        <div style="font-size: 9.5pt; color: #64748b; line-height: 1.4;">
+          <strong>STT Terpadu Nurul Fikri</strong><br>
+          Fullstack Web Development<br>
+          Tanggal: 10 November 2026
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <!-- METADATA MAHASISWA & TUGAS -->
+  <div class="meta-box">
+    <table class="meta-table">
+      <tr>
+        <td class="label">Nama Lengkap</td>
+        <td class="val">: Aulya Reski</td>
+        <td class="label">Mata Kuliah</td>
+        <td class="val">: React JS Lanjutan</td>
+      </tr>
+      <tr>
+        <td class="label">NIM</td>
+        <td class="val">: 0110124254</td>
+        <td class="label">Topik Penugasan</td>
+        <td class="val">: Routing & Hak Akses Pengguna (Tugas 4)</td>
+      </tr>
+      <tr>
+        <td class="label">Program Studi</td>
+        <td class="val">: Teknik Informatika / Fullstack</td>
+        <td class="label">Status Repositori</td>
+        <td class="val">: Private (Mentor Invited)</td>
+      </tr>
+      <tr>
+        <td class="label">Tautan GitHub</td>
+        <td class="val" colspan="3">: <a class="link" href="https://github.com/0110124254-create/Project-React-JS">https://github.com/0110124254-create/Project-React-JS</a></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 1. DESKRIPSI & TUJUAN TUGAS -->
+  <h2>1. Deskripsi & Tujuan Pembelajaran</h2>
+  <p>
+    Tugas ini bertujuan menambahkan pengaturan <strong>routing dan service otorisasi</strong> pada proyek <em>Ruang Baca</em> berbasis <strong>React JS</strong> untuk membatasi hak akses antara pengguna biasa (<em>user</em>) dan administrator (<em>admin</em>) melalui penerapan prinsip <strong>Protected Route</strong> dan <strong>Role-Based Access Control (RBAC)</strong>.
+  </p>
+  <ul class="checklist">
+    <li><strong>Memahami konsep Protected Route:</strong> Melindungi halaman privat dari akses tanpa autentikasi dan otorisasi.</li>
+    <li><strong>Navigasi Berdasarkan Peran (Role-Based Access):</strong> Membedakan rute yang boleh dibuka oleh Admin, User, dan Pengunjung Publik (Guest).</li>
+    <li><strong>Meningkatkan Keamanan & Struktur Frontend:</strong> Menggunakan Context API terpusat (<code>AuthContext</code>) dan sinkronisasi <code>localStorage</code> untuk persistensi sesi yang andal.</li>
+  </ul>
+
+  <!-- 2. MATRIKS HAK AKSES PENGGUNA -->
+  <h2>2. Matriks Hak Akses Pengguna (Access Control Matrix)</h2>
+  <table class="table-data">
+    <thead>
+      <tr>
+        <th>Rute / Halaman</th>
+        <th>Pengunjung (Guest)</th>
+        <th>Pengguna Biasa (User)</th>
+        <th>Administrator (Admin)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Beranda (<code>/</code>) & Katalog (<code>/books</code>)</strong></td>
+        <td><span style="color:#16a34a; font-weight:bold;">✔ Buka Bebas</span></td>
+        <td><span style="color:#16a34a; font-weight:bold;">✔ Buka Bebas</span></td>
+        <td><span style="color:#16a34a; font-weight:bold;">✔ Buka Bebas</span></td>
+      </tr>
+      <tr>
+        <td><strong>Masuk (<code>/login</code>) & Daftar (<code>/register</code>)</strong></td>
+        <td><span style="color:#16a34a; font-weight:bold;">✔ Buka Form</span></td>
+        <td><span style="color:#64748b;">↳ Auto Redirect ke Profil</span></td>
+        <td><span style="color:#64748b;">↳ Auto Redirect ke /admin</span></td>
+      </tr>
+      <tr>
+        <td><strong>Profil Pengguna (<code>/user/profile</code>)</strong></td>
+        <td><span style="color:#dc2626; font-weight:bold;">⛔ Redirect ke /login</span></td>
+        <td><span style="color:#16a34a; font-weight:bold;">✔ Diizinkan</span></td>
+        <td><span style="color:#16a34a; font-weight:bold;">✔ Diizinkan</span></td>
+      </tr>
+      <tr>
+        <td><strong>Admin Dashboard (<code>/admin</code>)</strong></td>
+        <td><span style="color:#dc2626; font-weight:bold;">⛔ Redirect ke /login</span></td>
+        <td><span style="color:#dc2626; font-weight:bold;">⛔ Ditolak (403 Unauthorized)</span></td>
+        <td><span style="color:#16a34a; font-weight:bold;">✔ Hak Akses Penuh</span></td>
+      </tr>
+      <tr>
+        <td><strong>CRUD Genre & Penulis (<code>/admin/*</code>)</strong></td>
+        <td><span style="color:#dc2626; font-weight:bold;">⛔ Redirect ke /login</span></td>
+        <td><span style="color:#dc2626; font-weight:bold;">⛔ Ditolak (403 Unauthorized)</span></td>
+        <td><span style="color:#16a34a; font-weight:bold;">✔ Hak Akses Penuh</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 3. RINCIAN ARSITEKTUR TEKNIS -->
+  <h2>3. Rincian Arsitektur Teknis yang Diimplementasikan</h2>
+
+  <div class="feature-card">
+    <h4>A. Service Otorisasi Terpusat (src/context/AuthContext.jsx)</h4>
+    <p>
+      Menggunakan <strong>React Context API</strong> dan custom hook <code>useAuth()</code> untuk menyediakan status autentikasi reaktif ke seluruh aplikasi:
+    </p>
+    <ul>
+      <li><code>user</code> &amp; <code>token</code>: Disinkronkan otomatis dari/ke <code>localStorage</code> saat reload.</li>
+      <li><code>isAuthenticated</code>: Memastikan pengguna memiliki token aktif dan data pengguna yang valid.</li>
+      <li><code>isAdmin</code>: Logika evaluasi peran (<code>role === 'admin' || is_admin === true</code>).</li>
+      <li><code>login(credentials)</code>, <code>logout()</code>, dan <code>switchDemoRole(targetRole)</code>.</li>
+    </ul>
+  </div>
+
+  <div class="feature-card">
+    <h4>B. Guard Terproteksi Berbasis Peran (src/components/ProtectedRoute.jsx)</h4>
+    <p>
+      Komponen pencegat rute cerdas yang memeriksa parameter <code>allowedRoles</code>:
+    </p>
+    <ul>
+      <li>Jika pengunjung belum login: Otomatis dialihkan ke <code>/login</code> dengan parameter lokasi asal (<code>state.from</code>).</li>
+      <li>Jika pengguna telah login tetapi perannya tidak terdaftar di <code>allowedRoles</code> (misal: user biasa mencoba membuka rute admin): Langsung dialihkan ke halaman khusus <code>/unauthorized</code> (403 Forbidden).</li>
+    </ul>
+  </div>
+
+  <div class="page-break"></div>
+
+  <div class="feature-card">
+    <h4>C. Halaman 403 Akses Ditolak (src/pages/auth/unauthorized.jsx)</h4>
+    <p>
+      Halaman 403 modern dan ramah pengguna yang menampilkan nama pengguna aktif, label peran saat ini, URL administratif yang dicegat, serta tombol aksi cepat untuk beralih ke profil pengguna atau mengganti akun ke administrator.
+    </p>
+  </div>
+
+  <div class="feature-card">
+    <h4>D. Dashboard Pengguna Biasa (src/pages/user/profile.jsx)</h4>
+    <p>
+      Menyediakan ruang personal bagi pengguna biasa (<code>role: user</code>), memuat kartu profil, metrik bacaan, dan fitur interaktif <em>"Uji Penolakan Akses /admin"</em> yang memungkinkan penguji melihat secara langsung sistem pencegatan rute bekerja.
+    </p>
+  </div>
+
+  <div class="feature-card">
+    <h4>E. Fitur 1-Klik Login Demo untuk Penguji (src/pages/auth/login.jsx)</h4>
+    <p>
+      Disediakan tombol preset instan pada form masuk untuk mempermudah evaluasi tugas tanpa perlu mengetik manual:
+      <br>
+      • <strong>👑 Masuk Admin:</strong> <code>admin@ruangbaca.com</code> / <code>password123</code> (Akses Penuh ke /admin).
+      <br>
+      • <strong>👤 Masuk User:</strong> <code>user@ruangbaca.com</code> / <code>password123</code> (Akses Terbatas ke /user/profile).
+    </p>
+  </div>
+
+  <!-- 4. CUPLIKAN KODE UTAMA -->
+  <h2>4. Cuplikan Kode Program Utama</h2>
+
+  <h3>A. Implementasi Guard Rute (src/components/ProtectedRoute.jsx)</h3>
+  <div class="code-box">
+export default function ProtectedRoute({ allowedRoles = [] }) {
+  const { user, isAuthenticated, role, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) return &lt;LoadingSpinner /&gt;;
+
+  // 1. Belum login sama sekali -> Arahkan ke /login
+  if (!isAuthenticated) {
+    return &lt;Navigate to="/login" state={{ from: location.pathname }} replace /&gt;;
+  }
+
+  // 2. Login, tapi peran tidak memenuhi syarat -> Arahkan ke 403 Unauthorized
+  if (allowedRoles.length > 0 &amp;&amp; !allowedRoles.includes(role)) {
+    return (
+      &lt;Navigate
+        to="/unauthorized"
+        state={{ attemptedPath: location.pathname, userRole: role, requiredRoles: allowedRoles }}
+        replace
+      /&gt;
+    );
+  }
+
+  return &lt;Outlet /&gt;;
+}
+  </div>
+
+  <h3>B. Konfigurasi Routing Berjenjang (src/App.jsx)</h3>
+  <div class="code-box">
+&lt;AuthProvider&gt;
+  &lt;Routes&gt;
+    {/* Rute Publik */}
+    &lt;Route element={&lt;PublicLayout /&gt;}&gt;
+      &lt;Route path="/" element={&lt;Home /&gt;} /&gt;
+      &lt;Route path="/books" element={&lt;Books /&gt;} /&gt;
+    &lt;/Route&gt;
+
+    {/* Rute Terproteksi Khusus Pengguna & Admin */}
+    &lt;Route element={&lt;ProtectedRoute allowedRoles={["user", "admin"]} /&gt;}&gt;
+      &lt;Route path="/user/profile" element={&lt;UserProfile /&gt;} /&gt;
+    &lt;/Route&gt;
+
+    {/* Rute Terproteksi Khusus Administrator */}
+    &lt;Route element={&lt;ProtectedRoute allowedRoles={["admin"]} /&gt;}&gt;
+      &lt;Route path="/admin" element={&lt;AdminLayout /&gt;}&gt;
+        &lt;Route index element={&lt;Dashboard /&gt;} /&gt;
+        &lt;Route path="genres" element={&lt;AdminGenres /&gt;} /&gt;
+        &lt;Route path="authors" element={&lt;AdminAuthors /&gt;} /&gt;
+      &lt;/Route&gt;
+    &lt;/Route&gt;
+
+    &lt;Route path="/unauthorized" element={&lt;Unauthorized /&gt;} /&gt;
+  &lt;/Routes&gt;
+&lt;/AuthProvider&gt;
+  </div>
+
+  <!-- 5. PETUNJUK PENGUJIAN -->
+  <h2>5. Petunjuk Pengujian Hak Akses</h2>
+  <ol>
+    <li>Buka aplikasi di <code>http://localhost:5173/login</code>.</li>
+    <li>Klik tombol <strong>"👤 Masuk User"</strong>. Anda akan diarahkan ke <code>/user/profile</code>.</li>
+    <li>Coba ketikkan URL <code>/admin</code> di browser atau klik tombol <em>"Coba Akses /admin"</em> pada profil. Amati bahwa sistem langsung menolak dan mengarahkan Anda ke <strong>403 Akses Ditolak</strong>.</li>
+    <li>Klik tombol <strong>"Ganti Akun ke Administrator"</strong>. Sistem akan mengautentikasi ulang sebagai Admin dan mengizinkan Anda masuk ke <code>/admin</code> secara penuh.</li>
+  </ol>
+
+  <!-- 6. PERNYATAAN ORISINALITAS -->
+  <h2>6. Pernyataan Orisinalitas Karya</h2>
+  <p>
+    Saya menyatakan bahwa kode sumber dan laporan <strong>Tugas React JS Lanjutan #4</strong> ini dikerjakan secara mandiri, jujur, dan bertanggung jawab tanpa plagiasi, sesuai dengan standar integritas akademik STT Terpadu Nurul Fikri.
+  </p>
+  <table style="width: 100%; margin-top: 18px;">
+    <tr>
+      <td style="width: 60%;"></td>
+      <td style="text-align: center;">
+        Depok, 10 November 2026<br>
+        Mahasiswa Pengembang,<br><br><br><br>
+        <strong>Aulya Reski</strong><br>
+        NIM: 0110124254
+      </td>
+    </tr>
+  </table>
+
+  <div class="footer-note">
+    Laporan Tugas React JS Lanjutan #4 · Sekolah Tinggi Teknologi Terpadu Nurul Fikri · NF Academy 2026
+  </div>
+
+</body>
+</html>

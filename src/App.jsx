@@ -1,5 +1,12 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
+// Auth Context Provider
+import { AuthProvider } from "./context/AuthContext";
+
+// Route Guards
+import ProtectedRoute from "./components/ProtectedRoute";
+import GuestRoute from "./components/GuestRoute";
+
 // Layouts
 import PublicLayout from "./layouts/public";
 import AdminLayout from "./layouts/admin";
@@ -9,11 +16,15 @@ import Home from "./pages/public/index";
 import Books from "./pages/public/books/index";
 import ShowBook from "./pages/public/books/show";
 
-// Auth Pages
+// Auth & Access Control Pages
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
+import Unauthorized from "./pages/auth/unauthorized";
 
-// Admin Pages
+// User Protected Pages
+import UserProfile from "./pages/user/profile";
+
+// Admin Protected Pages (CRUD & Management)
 import Dashboard from "./pages/admin/index";
 import AdminBooks from "./pages/admin/books/index";
 import BookCreate from "./pages/admin/books/create";
@@ -38,12 +49,18 @@ function NotFound() {
         <p className="text-sm text-gray-500 dark:text-gray-400">
           Maaf, halaman yang Anda cari tidak tersedia atau sedang dalam pembaruan.
         </p>
-        <div className="pt-2">
+        <div className="pt-2 flex justify-center gap-2">
           <Link
-            to="/admin"
+            to="/"
             className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition"
           >
-            Kembali ke Admin
+            Ke Beranda
+          </Link>
+          <Link
+            to="/admin"
+            className="inline-flex items-center px-4 py-2 text-sm font-medium text-indigo-700 bg-indigo-50 dark:bg-indigo-900/50 dark:text-indigo-300 rounded-lg hover:bg-indigo-100 transition"
+          >
+            Panel Admin
           </Link>
         </div>
       </div>
@@ -54,43 +71,65 @@ function NotFound() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* Public Website Routes */}
-        <Route element={<PublicLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/books" element={<Books />} />
-          <Route path="/books/:id" element={<ShowBook />} />
-        </Route>
+      <AuthProvider>
+        <Routes>
+          {/* ========================================= */}
+          {/* 1. PUBLIC WEBSITE ROUTES (Bebas Diakses) */}
+          {/* ========================================= */}
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/books" element={<Books />} />
+            <Route path="/books/:id" element={<ShowBook />} />
+          </Route>
 
-        {/* Auth Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+          {/* ========================================= */}
+          {/* 2. GUEST ROUTES (Khusus Belum Login)     */}
+          {/* ========================================= */}
+          <Route element={<GuestRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
 
-        {/* Admin Dashboard & Management Routes */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
-          
-          {/* Genre Routes (Read, Create, Update, Delete) */}
-          <Route path="genres" element={<AdminGenres />} />
-          <Route path="genres/create" element={<GenreCreate />} />
-          <Route path="genres/edit/:id" element={<GenreEdit />} />
-          
-          {/* Author Routes (Read, Create, Update, Delete) */}
-          <Route path="authors" element={<AdminAuthors />} />
-          <Route path="authors/create" element={<AuthorCreate />} />
-          <Route path="authors/edit/:id" element={<AuthorEdit />} />
-          
-          {/* Book Routes */}
-          <Route path="books" element={<AdminBooks />} />
-          <Route path="books/create" element={<BookCreate />} />
-          
-          {/* Transaction Routes */}
-          <Route path="transactions" element={<AdminTransactions />} />
-        </Route>
+          {/* ========================================= */}
+          {/* 3. USER PROTECTED ROUTES (User & Admin)   */}
+          {/* ========================================= */}
+          <Route element={<ProtectedRoute allowedRoles={["user", "admin"]} />}>
+            <Route path="/user/profile" element={<UserProfile />} />
+          </Route>
 
-        {/* 404 Fallback */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* ========================================= */}
+          {/* 4. ADMIN PROTECTED ROUTES (Khusus Admin)  */}
+          {/* ========================================= */}
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Dashboard />} />
+              
+              {/* Genre Management */}
+              <Route path="genres" element={<AdminGenres />} />
+              <Route path="genres/create" element={<GenreCreate />} />
+              <Route path="genres/edit/:id" element={<GenreEdit />} />
+              
+              {/* Author Management */}
+              <Route path="authors" element={<AdminAuthors />} />
+              <Route path="authors/create" element={<AuthorCreate />} />
+              <Route path="authors/edit/:id" element={<AuthorEdit />} />
+              
+              {/* Book Management */}
+              <Route path="books" element={<AdminBooks />} />
+              <Route path="books/create" element={<BookCreate />} />
+              
+              {/* Transaction Management */}
+              <Route path="transactions" element={<AdminTransactions />} />
+            </Route>
+          </Route>
+
+          {/* ========================================= */}
+          {/* 5. HALAMAN 403 FORBIDDEN & 404 NOT FOUND  */}
+          {/* ========================================= */}
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

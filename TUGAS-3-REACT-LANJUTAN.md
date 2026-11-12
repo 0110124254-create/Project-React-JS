@@ -94,3 +94,4 @@ Project-React-JS/
 ## 🧑‍💻 Identitas & Hak Cipta Karya
 
 Seluruh kode program ini dibuat secara mandiri oleh **Aulya Reski** (NIM: 0110124254), mahasiswa STT Terpadu Nurul Fikri, untuk memenuhi ketentuan **Tugas React JS Lanjutan #3 – Fitur Registrasi Pengguna** pada program NF Academy Fullstack Web Development.
+

@@ -379,25 +379,37 @@ export const deleteAuthor = async (id) => {
 // TUGAS 3: FITUR REGISTRASI & AUTH PENGGUNA
 // ==========================================
 
-// Data awal pengguna untuk fallback lokal / pengujian offline
+// Data awal pengguna untuk fallback lokal / pengujian otorisasi peran
 const INITIAL_USERS = [
   {
     id: 1,
+    name: 'Aulya Reski (Administrator)',
+    username: 'admin',
+    email: 'admin@ruangbaca.com',
+    password: 'password123',
+    role: 'admin',
+    is_admin: true,
+    created_at: '2026-10-31T10:00:00.000000Z',
+  },
+  {
+    id: 2,
+    name: 'Budi Santoso (Pengguna Biasa)',
+    username: 'user',
+    email: 'user@ruangbaca.com',
+    password: 'password123',
+    role: 'user',
+    is_admin: false,
+    created_at: '2026-11-01T12:00:00.000000Z',
+  },
+  {
+    id: 3,
     name: 'Aulya Reski',
     username: 'aresponse',
     email: 'aulya@example.com',
     password: 'password123',
     role: 'admin',
+    is_admin: true,
     created_at: '2026-10-31T10:00:00.000000Z',
-  },
-  {
-    id: 2,
-    name: 'Budi Santoso',
-    username: 'budisantoso',
-    email: 'budi@example.com',
-    password: 'password123',
-    role: 'member',
-    created_at: '2026-11-01T12:00:00.000000Z',
   },
 ];
 
@@ -473,7 +485,8 @@ export const registerUser = async (userData) => {
       username: payload.username,
       email: payload.email,
       password: payload.password,
-      role: 'member',
+      role: 'user',
+      is_admin: false,
       created_at: new Date().toISOString(),
     };
     token = 'mock-sanctum-token-' + Date.now();
@@ -523,17 +536,26 @@ export const loginUser = async (credentials) => {
     );
 
     if (found) {
+      const isAdmin = Boolean(found.is_admin || found.role === 'admin');
       user = {
         id: found.id,
         name: found.name,
         username: found.username,
         email: found.email,
-        role: found.role || 'member',
+        role: isAdmin ? 'admin' : (found.role || 'user'),
+        is_admin: isAdmin,
       };
       token = 'mock-sanctum-token-' + Date.now();
     } else {
       throw new Error('Email/Username atau kata sandi tidak sesuai.');
     }
+  }
+
+  // Normalisasi role jika dari API
+  if (user) {
+    const isAdmin = Boolean(user.is_admin || user.role === 'admin');
+    user.role = isAdmin ? 'admin' : (user.role || 'user');
+    user.is_admin = isAdmin;
   }
 
   if (token) {
@@ -547,6 +569,21 @@ export const loginUser = async (credentials) => {
     source,
     message: 'Berhasil masuk ke aplikasi!',
   };
+};
+
+/**
+ * Logout pengguna dan bersihkan sesi otorisasi
+ */
+export const logoutUser = async () => {
+  try {
+    await apiClient.post('/logout');
+  } catch (err) {
+    console.warn('Logout API error / offline:', err.message);
+  } finally {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
+  return true;
 };
 
 export default apiClient;
